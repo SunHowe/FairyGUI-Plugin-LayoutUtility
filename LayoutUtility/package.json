@@ -1,0 +1,11 @@
+{
+	"name": "com.fairygui.plugin.layout_utility",
+	"displayName": "布局辅助工具",
+	"description": "为ui布局提供编辑的操作",
+	"version": "0.0.1",
+	"author": {
+		"name": "SunHowe"
+	},
+	"icon": "",
+	"main": "main.js"
+}

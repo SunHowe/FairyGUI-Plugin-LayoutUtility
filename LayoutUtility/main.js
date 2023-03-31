@@ -55,6 +55,9 @@ let flipHorizontalRelation = function (obj) {
                 case FRelationType.Left_Right:
                     relationItemDef.type = FRelationType.Right_Left;
                     break;
+                case FRelationType.Right_Left:
+                    relationItemDef.type = FRelationType.Left_Right;
+                    break;
                 case FRelationType.Right_Center:
                     relationItemDef.type = FRelationType.Left_Center;
                     break;

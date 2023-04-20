@@ -166,9 +166,11 @@ let flipHorizontalRelationAndPosition = function (nodes, width) {
 
     for (let i = 0; i < nodes.Count; i++) {
         let node = nodes.get_Item(i);
-        if (node.objectType == "group" && isHorizontalGroup(node)) {
-            flipHorizontalGroup(node);
-            flipHorizontal(node, width);
+        if (node.objectType == "group") {
+            if (isHorizontalGroup(node)) {
+                flipHorizontalGroup(node);
+                flipHorizontal(node, width);
+            }
             continue;
         }
 

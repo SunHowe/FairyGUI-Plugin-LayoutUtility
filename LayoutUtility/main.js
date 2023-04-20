@@ -243,11 +243,17 @@ let createARBranchDirectory = function (packageObj) {
 // 拷贝组件到分支路径
 let copyComponentToARBranch = function (packageItem) {
     let packageObj = packageItem.owner;
+    let branchName = "/:" + BRANCH_NAME_AR;
     let path = "/:" + BRANCH_NAME_AR + packageItem.path;
 
     let item = packageObj.GetItemByPath(path);
     if (item == null) {
         packageObj.CreatePath(path);
+    }
+    
+    if (packageObj.GetItemByPath(path + packageItem.name) != null) {
+        console.log(packageItem.name + " already exists.")
+        return null;
     }
 
     let newItem = packageObj.DuplicateItem(packageItem, packageItem.name + "_Temp");
@@ -259,7 +265,6 @@ let copyComponentToARBranch = function (packageItem) {
 
 // 对组件进行阿语转置
 let executeARTranslate = function (packageItem) {
-    let url = packageItem.GetURL();
     console.log("进行阿语转置: " + packageItem.name + ", url:" + url);
 
     let closeAfterExecute = false;
@@ -318,6 +323,9 @@ let createARBranchComponents = function (packageObj, packageItems, needTranslate
     for (let i = 0; i < items.length; i++) {
         let item = items[i];
         let newItem = copyComponentToARBranch(item);
+
+        if (newItem == null)
+            continue;
 
         if (!needTranslate)
             continue;
@@ -418,8 +426,6 @@ addTool("创建阿语转置分支组件", "CreateARBranchComponent", libMenu, fu
 
     for (let i = 0; i < selected.Count; i++) {
         let item = selected.get_Item(i);
-
-        console.log(item.name + " type:" + item.type);
         if (item.type != "component")
             continue;
 
@@ -443,8 +449,6 @@ addTool("创建阿语分支组件(不转置)", "CreateARBranchComponent", libMen
 
     for (let i = 0; i < selected.Count; i++) {
         let item = selected.get_Item(i);
-
-        console.log(item.name + " type:" + item.type);
         if (item.type != "component")
             continue;
 
@@ -465,8 +469,6 @@ addTool("对当前组件进行阿语转置", "TranslateARBranchComponent", libMe
 
     for (let i = 0; i < selected.Count; i++) {
         let item = selected.get_Item(i);
-
-        console.log(item.name + " type:" + item.type);
         if (item.type != "component")
             continue;
 

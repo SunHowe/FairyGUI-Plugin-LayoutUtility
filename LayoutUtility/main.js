@@ -407,38 +407,69 @@ addTool("创建当前包的阿语转置分支组件", "CreateArBranchComponentsI
 });
 
 addTool("创建阿语转置分支组件", "CreateARBranchComponent", libMenu, function (params) {
-    let selected = App.libView.GetSelectedResource();
+    let selected = App.libView.GetSelectedResources(true);
     if (selected == null)
         return;
 
-    let packageObj = selected.owner;
+    let packageObj = null;
     let items = [];
-    items.push(selected);
+
+    for (let i = 0; i < selected.Count; i++) {
+        let item = selected.get_Item(i);
+
+        console.log(item.name + " type:" + item.type);
+        if (item.type != "component")
+            continue;
+
+        packageObj = item.owner;
+        items.push(item);
+    }
+
+    if (items.length == 0)
+        return;
 
     createARBranchComponents(packageObj, items, true);
 })
 
 addTool("创建阿语分支组件(不转置)", "CreateARBranchComponent", libMenu, function (params) {
-    let selected = App.libView.GetSelectedResource();
+    let selected = App.libView.GetSelectedResources(true);
     if (selected == null)
         return;
 
-    let packageObj = selected.owner;
+    let packageObj = null;
     let items = [];
-    items.push(selected);
+
+    for (let i = 0; i < selected.Count; i++) {
+        let item = selected.get_Item(i);
+
+        console.log(item.name + " type:" + item.type);
+        if (item.type != "component")
+            continue;
+
+        packageObj = item.owner;
+        items.push(item);
+    }
+
+    if (items.length == 0)
+        return;
 
     createARBranchComponents(packageObj, items, false);
 })
 
 addTool("对当前组件进行阿语转置", "TranslateARBranchComponent", libMenu, function (params) {
-    let selected = App.libView.GetSelectedResource();
+    let selected = App.libView.GetSelectedResources(true);
     if (selected == null)
         return;
 
-    if (selected.type != "component")
-        return;
+    for (let i = 0; i < selected.Count; i++) {
+        let item = selected.get_Item(i);
 
-    executeARTranslate(selected);
+        console.log(item.name + " type:" + item.type);
+        if (item.type != "component")
+            continue;
+
+        executeARTranslate(item);
+    }
 })
 
 for (let i = 0; i < tools.length; i++) {

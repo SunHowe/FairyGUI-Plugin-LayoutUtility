@@ -265,6 +265,7 @@ let copyComponentToARBranch = function (packageItem) {
 
 // 对组件进行阿语转置
 let executeARTranslate = function (packageItem) {
+    let url = packageItem.GetURL();
     console.log("进行阿语转置: " + packageItem.name + ", url:" + url);
 
     let closeAfterExecute = false;
